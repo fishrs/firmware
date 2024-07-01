@@ -1,4 +1,4 @@
-use fishrs::out::lcd::Ili9341Lcd;
+use fishrs::{fish::FishRs, out::lcd::Ili9341Lcd};
 use rppal::spi::{Bus, Mode, SlaveSelect};
 
 const LCD_WIDTH: usize = 240;
@@ -15,6 +15,7 @@ fn main() {
 
     // Send the image to the LCD
     lcd.send_image(&img.to_rgb8()).expect("Write image");
+
     loop {
 
     }
