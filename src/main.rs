@@ -156,19 +156,31 @@ fn lcd_data(spi: &mut Spi, dc_pin: &mut OutputPin, data: u8) {
 }
 
 fn send_image_to_lcd(spi: &mut Spi, dc_pin: &mut OutputPin, img: &ImageBuffer<Rgb<u8>, Vec<u8>>) {
-    lcd_command(spi, dc_pin, 0x2C); // Memory write
+    // Set column address
+    lcd_command(spi, dc_pin, 0x2A);
+    lcd_data(spi, dc_pin, 0x00);
+    lcd_data(spi, dc_pin, 0x00);
+    lcd_data(spi, dc_pin, (LCD_WIDTH - 1 >> 8) as u8);
+    lcd_data(spi, dc_pin, (LCD_WIDTH - 1 & 0xFF) as u8);
 
-    for y in 0..LCD_HEIGHT {
-        for x in 0..LCD_WIDTH {
-            let pixel = img.get_pixel(x as u32, y as u32);
-            let r = pixel[0];
-            let g = pixel[1];
-            let b = pixel[2];
+    // Set row address
+    lcd_command(spi, dc_pin, 0x2B);
+    lcd_data(spi, dc_pin, 0x00);
+    lcd_data(spi, dc_pin, 0x00);
+    lcd_data(spi, dc_pin, (LCD_HEIGHT - 1 >> 8) as u8);
+    lcd_data(spi, dc_pin, (LCD_HEIGHT - 1 & 0xFF) as u8);
 
-            // ILI9341 expects 16-bit color (5-6-5 format)
-            let color: u16 = ((r as u16 & 0xF8) << 8) | ((g as u16 & 0xFC) << 3) | (b as u16 >> 3);
-            lcd_data(spi, dc_pin, (color >> 8) as u8); // High byte
-            lcd_data(spi, dc_pin, (color & 0xFF) as u8); // Low byte
-        }
+    // Write to RAM
+    lcd_command(spi, dc_pin, 0x2C);
+
+    // Send image data
+    for pixel in img.pixels() {
+        let r = pixel[0] >> 3;
+        let g = pixel[1] >> 2;
+        let b = pixel[2] >> 3;
+        let color: u16 = ((r as u16) << 11) | ((g as u16) << 5) | (b as u16);
+
+        dc_pin.set_high();
+        spi.write(&[(color >> 8) as u8, color as u8]).expect("Failed to send pixel data");
     }
 }
