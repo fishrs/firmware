@@ -25,18 +25,114 @@ fn main() {
     rst_pin.set_high();
     sleep(Duration::from_millis(100));
 
-    // Initialize the LCD (Example for ILI9341 controller)
-    lcd_command(&mut spi, &mut dc_pin, 0x01); // Software reset
-    sleep(Duration::from_millis(5));
-    lcd_command(&mut spi, &mut dc_pin, 0x28); // Display off
+    lcd_command(&mut spi, &mut dc_pin, 0xEF);
+    lcd_data(&mut spi, &mut dc_pin, 0x03);
+    lcd_data(&mut spi, &mut dc_pin, 0x80);
+    lcd_data(&mut spi, &mut dc_pin, 0x02);
+
     lcd_command(&mut spi, &mut dc_pin, 0xCF);
     lcd_data(&mut spi, &mut dc_pin, 0x00);
-    lcd_data(&mut spi, &mut dc_pin, 0x83);
+    lcd_data(&mut spi, &mut dc_pin, 0xC1);
     lcd_data(&mut spi, &mut dc_pin, 0x30);
-    // Add more initialization commands as required by your LCD controller
+
+    lcd_command(&mut spi, &mut dc_pin, 0xED);
+    lcd_data(&mut spi, &mut dc_pin, 0x64);
+    lcd_data(&mut spi, &mut dc_pin, 0x03);
+    lcd_data(&mut spi, &mut dc_pin, 0x12);
+    lcd_data(&mut spi, &mut dc_pin, 0x81);
+
+    lcd_command(&mut spi, &mut dc_pin, 0xE8);
+    lcd_data(&mut spi, &mut dc_pin, 0x85);
+    lcd_data(&mut spi, &mut dc_pin, 0x00);
+    lcd_data(&mut spi, &mut dc_pin, 0x78);
+
+    lcd_command(&mut spi, &mut dc_pin, 0xCB);
+    lcd_data(&mut spi, &mut dc_pin, 0x39);
+    lcd_data(&mut spi, &mut dc_pin, 0x2C);
+    lcd_data(&mut spi, &mut dc_pin, 0x00);
+    lcd_data(&mut spi, &mut dc_pin, 0x34);
+    lcd_data(&mut spi, &mut dc_pin, 0x02);
+
+    lcd_command(&mut spi, &mut dc_pin, 0xF7);
+    lcd_data(&mut spi, &mut dc_pin, 0x20);
+
+    lcd_command(&mut spi, &mut dc_pin, 0xEA);
+    lcd_data(&mut spi, &mut dc_pin, 0x00);
+    lcd_data(&mut spi, &mut dc_pin, 0x00);
+
+    lcd_command(&mut spi, &mut dc_pin, 0xC0); // Power control 1
+    lcd_data(&mut spi, &mut dc_pin, 0x23);
+
+    lcd_command(&mut spi, &mut dc_pin, 0xC1); // Power control 2
+    lcd_data(&mut spi, &mut dc_pin, 0x10);
+
+    lcd_command(&mut spi, &mut dc_pin, 0xC5); // VCOM control 1
+    lcd_data(&mut spi, &mut dc_pin, 0x3e);
+    lcd_data(&mut spi, &mut dc_pin, 0x28);
+
+    lcd_command(&mut spi, &mut dc_pin, 0xC7); // VCOM control 2
+    lcd_data(&mut spi, &mut dc_pin, 0x86);
+
+    lcd_command(&mut spi, &mut dc_pin, 0x36); // Memory Access Control
+    lcd_data(&mut spi, &mut dc_pin, 0x48);
+
+    lcd_command(&mut spi, &mut dc_pin, 0x3A); // Pixel Format Set
+    lcd_data(&mut spi, &mut dc_pin, 0x55);    // 16-bit/pixel
+
+    lcd_command(&mut spi, &mut dc_pin, 0xB1); // Frame Rate Control
+    lcd_data(&mut spi, &mut dc_pin, 0x00);
+    lcd_data(&mut spi, &mut dc_pin, 0x18);
+
+    lcd_command(&mut spi, &mut dc_pin, 0xB6); // Display Function Control
+    lcd_data(&mut spi, &mut dc_pin, 0x08);
+    lcd_data(&mut spi, &mut dc_pin, 0x82);
+    lcd_data(&mut spi, &mut dc_pin, 0x27);
+
+    lcd_command(&mut spi, &mut dc_pin, 0xF2); // 3Gamma Function Disable
+    lcd_data(&mut spi, &mut dc_pin, 0x00);
+
+    lcd_command(&mut spi, &mut dc_pin, 0x26); // Gamma curve selected
+    lcd_data(&mut spi, &mut dc_pin, 0x01);
+
+    lcd_command(&mut spi, &mut dc_pin, 0xE0); // Set Gamma
+    lcd_data(&mut spi, &mut dc_pin, 0x0F);
+    lcd_data(&mut spi, &mut dc_pin, 0x31);
+    lcd_data(&mut spi, &mut dc_pin, 0x2B);
+    lcd_data(&mut spi, &mut dc_pin, 0x0C);
+    lcd_data(&mut spi, &mut dc_pin, 0x0E);
+    lcd_data(&mut spi, &mut dc_pin, 0x08);
+    lcd_data(&mut spi, &mut dc_pin, 0x4E);
+    lcd_data(&mut spi, &mut dc_pin, 0xF1);
+    lcd_data(&mut spi, &mut dc_pin, 0x37);
+    lcd_data(&mut spi, &mut dc_pin, 0x07);
+    lcd_data(&mut spi, &mut dc_pin, 0x10);
+    lcd_data(&mut spi, &mut dc_pin, 0x03);
+    lcd_data(&mut spi, &mut dc_pin, 0x0E);
+    lcd_data(&mut spi, &mut dc_pin, 0x09);
+    lcd_data(&mut spi, &mut dc_pin, 0x00);
+
+    lcd_command(&mut spi, &mut dc_pin, 0xE1); // Set Gamma
+    lcd_data(&mut spi, &mut dc_pin, 0x00);
+    lcd_data(&mut spi, &mut dc_pin, 0x0E);
+    lcd_data(&mut spi, &mut dc_pin, 0x14);
+    lcd_data(&mut spi, &mut dc_pin, 0x03);
+    lcd_data(&mut spi, &mut dc_pin, 0x11);
+    lcd_data(&mut spi, &mut dc_pin, 0x07);
+    lcd_data(&mut spi, &mut dc_pin, 0x31);
+    lcd_data(&mut spi, &mut dc_pin, 0xC1);
+    lcd_data(&mut spi, &mut dc_pin, 0x48);
+    lcd_data(&mut spi, &mut dc_pin, 0x08);
+    lcd_data(&mut spi, &mut dc_pin, 0x0F);
+    lcd_data(&mut spi, &mut dc_pin, 0x0C);
+    lcd_data(&mut spi, &mut dc_pin, 0x31);
+    lcd_data(&mut spi, &mut dc_pin, 0x36);
+    lcd_data(&mut spi, &mut dc_pin, 0x0F);
+
+    lcd_command(&mut spi, &mut dc_pin, 0x11); // Exit Sleep
+    sleep(Duration::from_millis(120));
     lcd_command(&mut spi, &mut dc_pin, 0x29); // Display on
 
-    // Turn on the backlight
+    // Initialize the LCD (Example for ILI9341 controller)
     bl_pin.set_high();
 
     // Load the image
