@@ -143,6 +143,9 @@ fn main() {
 
     // Send the image to the LCD
     send_image_to_lcd(&mut spi, &mut dc_pin, &img.to_rgb8());
+    loop {
+
+    }
 }
 
 fn lcd_command(spi: &mut Spi, dc_pin: &mut OutputPin, cmd: u8) {
