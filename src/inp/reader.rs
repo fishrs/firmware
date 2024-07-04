@@ -1,5 +1,6 @@
 use std::error::Error;
 
+use datafmt::LakeData;
 use rppal::uart::Parity;
 
 use super::{gps::Gps, strain::StrainGauge};
@@ -17,10 +18,10 @@ impl DataReader {
         })
     }
 
-    pub fn read(&self) -> ((f64, f64), f64) {
+    pub fn read(&self) -> LakeData {
         let coords = self.gps.get_lon_lat();
         let strain = self.strain.get_strain();
 
-        (coords, strain)
+        LakeData::new(coords.0, coords.1, strain, false)
     }
 }
