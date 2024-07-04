@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+datafmt = { git = "https://github.com/fishrs/datafmt", version = "0.1.0" }
 image = "0.25.1"
 mappy = { git = "https://github.com/fishrs/mappy", version = "0.1.0" }
 rppal = "0.18.0"
