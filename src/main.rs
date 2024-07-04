@@ -20,14 +20,15 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let reader = DataReader::new((9600, Parity::None, 8, 1), 5/*Change*/)?;
 
-    let mut data_log = vec![];
+    //let mut data_log = vec![];
 
     //Initialize model
 
     loop {
 
-        let new_state = reader.read();
-        data_log.push(new_state);
+        //let new_state = reader.read();
+        //data_log.push(new_state);
+
 
         let save_flag = false;
 
