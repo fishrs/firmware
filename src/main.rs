@@ -24,7 +24,6 @@ fn main() -> Result<(), Box<dyn Error>> {
     loop {
         for i in 1..=3_659 {
             draw_img(&mut lcd, &format!("frames/subway{:04}.jpg", i));
-            std::thread::sleep(Duration::from_millis(150))
         }
     }
 
