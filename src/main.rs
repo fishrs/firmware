@@ -20,9 +20,13 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut lcd = Ili9341Lcd::new(24, 25, 18, (Bus::Spi0, SlaveSelect::Ss0, 32_000_000, Mode::Mode0), LCD_WIDTH, LCD_HEIGHT).expect("Init lcd");
     lcd.init();
 
-    draw_img(&mut lcd, "frames/subway0001.jpg");
 
-    loop {}
+    loop {
+        for i in 1..=3_659 {
+            draw_img(&mut lcd, &format!("frames/subway{:04}.jpg", i));
+            std::thread::sleep(Duration::from_millis(150))
+        }
+    }
 
     /*let reader = DataReader::new((9600, Parity::None, 8, 1), 5/*Change*/)?;
 
