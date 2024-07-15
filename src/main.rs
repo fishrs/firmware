@@ -1,7 +1,7 @@
-use std::{error::Error, time::Duration};
+use std::{error::Error, thread, time::Duration};
 
-use fishrs::{fish::FishRs, inp::reader::DataReader, out::lcd::Ili9341Lcd};
-use rppal::{spi::{Bus, Mode, SlaveSelect}, uart::Parity};
+use fishrs::{fish::FishRs, inp::reader::DataReader, out::{lcd::Ili9341Lcd, motor_driver::MotorDriver}};
+use rppal::{pwm::Channel, spi::{Bus, Mode, SlaveSelect}, uart::Parity};
 
 const LCD_WIDTH: usize = 240;
 const LCD_HEIGHT: usize = 320;
@@ -22,7 +22,16 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     draw_img(&mut lcd, "splash.jpg");
 
-    loop {}
+    let mut servo = MotorDriver::new(Channel::Pwm0);
+
+    loop {
+        servo.set_duty(3500f64);
+        thread::sleep(Duration::from_millis(1000));
+
+        servo.set_duty(5000f64);
+        thread::sleep(Duration::from_millis(1000));
+
+    }
 
     /*loop {
         for i in 1..=3_659 {
