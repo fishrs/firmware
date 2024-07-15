@@ -22,7 +22,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     draw_img(&mut lcd, "splash.jpg");
 
-    let mut servo = MotorDriver::new(Channel::Pwm0);
+    let mut servo = MotorDriver::new(Channel::Pwm1);
 
     loop {
         servo.set_duty(3500f64);
