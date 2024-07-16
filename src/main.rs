@@ -35,10 +35,10 @@ fn main() -> Result<(), Box<dyn Error>> {
         servo.set_angle(120f64);
         thread::sleep(Duration::from_millis(5000));
 
-        servo.set_angle(25f64);
-        thread::sleep(Duration::from_millis(5000));
-    
         pause();
+        thread::sleep(Duration::from_millis(500));
+
+        servo.set_angle(25f64);
         thread::sleep(Duration::from_millis(5000));
 
     }
