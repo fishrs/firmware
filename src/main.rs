@@ -1,10 +1,17 @@
-use std::{error::Error, thread, time::Duration};
+use std::{error::Error, io::{stdin, stdout, Read, Write}, thread, time::Duration};
 
 use fishrs::{fish::FishRs, inp::reader::DataReader, out::{lcd::Ili9341Lcd, motor_driver::MotorDriver}};
 use rppal::{pwm::Channel, spi::{Bus, Mode, SlaveSelect}, uart::Parity};
 
 const LCD_WIDTH: usize = 240;
 const LCD_HEIGHT: usize = 320;
+
+pub fn pause() {
+    let mut stdout = stdout();
+    stdout.write(b"Press Enter to continue...").unwrap();
+    stdout.flush().unwrap();
+    stdin().read(&mut [0]).unwrap();
+}
 
 pub fn draw_img(lcd: &mut Ili9341Lcd, img_str: &str) {
     let img = image::open(img_str).expect("Failed to open image");
@@ -26,10 +33,13 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     loop {
         servo.set_angle(120f64);
-        thread::sleep(Duration::from_millis(2500));
+        thread::sleep(Duration::from_millis(5000));
 
-        servo.set_angle(0f64);
-        thread::sleep(Duration::from_millis(2500));
+        servo.set_angle(25f64);
+        thread::sleep(Duration::from_millis(5000));
+    
+        pause();
+        thread::sleep(Duration::from_millis(5000));
 
     }
 
