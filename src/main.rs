@@ -25,11 +25,11 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut servo = MotorDriver::new(Channel::Pwm1);
 
     loop {
-        servo.set_duty(3500f64);
-        thread::sleep(Duration::from_millis(1000));
+        servo.set_angle(120f64);
+        thread::sleep(Duration::from_millis(2500));
 
-        servo.set_duty(5000f64);
-        thread::sleep(Duration::from_millis(1000));
+        servo.set_angle(0f64);
+        thread::sleep(Duration::from_millis(2500));
 
     }
 
